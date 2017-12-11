@@ -94,24 +94,25 @@ cat COI\_prelim\_1.tax | perl -pe
 \# the following table shows all the necessary changes
 
   -------------------------- ------------------------------------------------------------------------
-  Original Designation       Curated Designation
-  ;;f\_\_Sphaerotheriidae    ;o\_\_Sphaerotheriida;f\_\_Sphaerotheriidae
-  ;;f\_\_Zephroniidae        ;o\_\_Sphaerotheriida;f\_\_Zephroniidae
-  ;;f\_\_Lepidotrichidae     ;o\_\_Zygentoma;f\_\_Lepidotrichidae
-  ;;f\_\_Lepismatidae        ;o\_\_Zygentoma;f\_\_Lepismatidae
-  ;;f\_\_Nicoletiidae        ;o\_\_Zygentoma;f\_\_Nicoletiidae
-  ;;o\_\_Pauropoda           ;c\_\_Myriapoda;o\_\_Paurapoda
-  ;;g\_\_Pseudocellus        ;f\_\_Riconoididae;g\_\_Pseudocellus
-  ;;g\_\_Chanbria            ;f\_\_Eremobatidae;g\_\_Chanbria
-  ;;s\_\_Tanypodinae         ;g\_\_Tanypodinae;s\_\_Tanypodinae
-  ;;s\_\_Ennominae           ;g\_\_Ennominae;s\_\_Ennominae
-  ;;g\_\_Dichelesthiidae     ;f\_\_Dichelesthiidae;g\_\_Dichelesthiidae
-  ;;g\_\_Phallocryptus       ;f\_\_Thamnocephalidae;g\_\_Phallocryptus
-  ;;;g\_\_Lasionectes        ;o\_\_Nectiopoda;f\_\_Speleonectidae;g\_\_Lasionectes
-  ;;;;g\_\_Prionodiaptomus   ;c\_\_Maxillopoda;o\_\_Calanoida;f\_\_Diaptomidae;g\_\_Prionodiaptomus
-  ;;o\_\_Symphyla            ;c\_\_Myriapoda;o\_\_Symphyla
-  ;;;f\_Peripatidae          ;c\_\_Onychophora;o\_\_Onychophora;f\_\_Peripatidae
-  ;;;f\_Peripatopsidae       ;c\_\_Onychophora;o\_\_Onychophora;f\_\_Peripatopsidae
+  Original Designation | Curated Designation
+  --- | ---
+  ;;f\_\_Sphaerotheriidae | ;o\_\_Sphaerotheriida;f\_\_Sphaerotheriidae
+  ;;f\_\_Zephroniidae | ;o\_\_Sphaerotheriida;f\_\_Zephroniidae
+  ;;f\_\_Lepidotrichidae | ;o\_\_Zygentoma;f\_\_Lepidotrichidae
+  ;;f\_\_Lepismatidae | ;o\_\_Zygentoma;f\_\_Lepismatidae
+  ;;f\_\_Nicoletiidae | ;o\_\_Zygentoma;f\_\_Nicoletiidae
+  ;;o\_\_Pauropoda | ;c\_\_Myriapoda;o\_\_Paurapoda
+  ;;g\_\_Pseudocellus | ;f\_\_Riconoididae;g\_\_Pseudocellus
+  ;;g\_\_Chanbria | ;f\_\_Eremobatidae;g\_\_Chanbria
+  ;;s\_\_Tanypodinae | ;g\_\_Tanypodinae;s\_\_Tanypodinae
+  ;;s\_\_Ennominae | ;g\_\_Ennominae;s\_\_Ennominae
+  ;;g\_\_Dichelesthiidae | ;f\_\_Dichelesthiidae;g\_\_Dichelesthiidae
+  ;;g\_\_Phallocryptus | ;f\_\_Thamnocephalidae;g\_\_Phallocryptus
+  ;;;g\_\_Lasionectes | ;o\_\_Nectiopoda;f\_\_Speleonectidae;g\_\_Lasionectes
+  ;;;;g\_\_Prionodiaptomus | ;c\_\_Maxillopoda;o\_\_Calanoida;f\_\_Diaptomidae;g\_\_Prionodiaptomus
+  ;;o\_\_Symphyla | ;c\_\_Myriapoda;o\_\_Symphyla
+  ;;;f\_Peripatidae | ;c\_\_Onychophora;o\_\_Onychophora;f\_\_Peripatidae
+  ;;;f\_Peripatopsidae | ;c\_\_Onychophora;o\_\_Onychophora;f\_\_Peripatopsidae
   -------------------------- ------------------------------------------------------------------------
 
 \

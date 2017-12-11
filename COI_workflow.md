@@ -1,4 +1,4 @@
-**Curate NCBI Fasta Files**
+# Curate NCBI Fasta Files
 
 **Make sequences continuous by removing next line characters**
 
@@ -18,15 +18,12 @@ python Python\_script\_1.py Arthropod\_COI\_rmNL.fasta
 \# This produces the following output file:
 Arthropod\_COI\_rmNL\_rmNNN.fasta
 
-\
-\
-
 **Get list of NCBI Gi Numbers for Sequence Entries**
 
 cat Arthropod\_COI\_rmNL\_rmNNN.fasta | perl -pe ‘s/\^\>(\\d+)/\$1/’ \>
 COI.gis
 
-**Get Taxonomies**
+# Get Taxonomies
 
 **Use Perl script from Sickel et al. (2016) (requires NCBI Taxonomy
 module)**
@@ -36,7 +33,7 @@ perl
 --gis COI.gis --out COI.tax --species COI.species.taxids –genus
 COI.genus.taxids
 
-**Run Metaxa2 Database Builder Tool to Extract Zeale Region**
+# Run Metaxa2 Database Builder Tool to Extract Zeale Region
 
 perl /PATH/TO/Metaxa2\_2.2/metaxa2\_dbb -o COI\_PRELIM -g COI\_PRELIM -t
 COI.tax -i Arthropod\_COI\_rmNL\_rmNNN.fasta -r 1051536662
@@ -67,7 +64,7 @@ cat E.full-length-trimmed-realigned.afa | perl –pe ‘s/-//g’ | perl –pe
 ‘s/\^\>(\\d+)\\|E/\>\$1/’ | awk '{ if (\$0 !\~ /\>/) {print
 toupper(\$0)} else {print \$0} }' \> COI\_prelim\_0.fasta
 
-**Curate Taxonomies**
+# Curate Taxonomies
 
 **Remove Entries Undefined at Kingdom Rank and Reformat**
 
@@ -115,9 +112,6 @@ cat COI\_prelim\_1.tax | perl -pe
   ;;;f\_Peripatopsidae | ;c\_\_Onychophora;o\_\_Onychophora;f\_\_Peripatopsidae
   -------------------------- ------------------------------------------------------------------------
 
-\
-\
-
 **Curate Leaves of Taxonomic Entries (e.g. sp., cf., nr., etc.)**
 
 \# The following is an example of using Perl substitution to removes
@@ -130,20 +124,14 @@ COI\_prelim\_3.tax
 our sequence data
 
 -   ‘sp.’
-
 -   ‘cf.’
-
 -   ‘gen.’
-
 -   ‘nr.’
-
 -   ‘environmental sample’
-
 -   ‘group’
-
 -   ‘complex’
 
-**Remove Duplicate Sequences**
+# Remove Duplicate Sequences
 
 \# For this step, sequence headers must contain the taxonomic lineage of
 the entry, which can be done using a Perl script from Sickel et al.
@@ -170,17 +158,7 @@ COI\_final.tax
 \# Check to ensure that the archetypical reference sequence, in this
 case Gi 1051536662, is still present in the final dataset
 
-**Train Metaxa2 DNA Sequence Classifier**
+# Train Metaxa2 DNA Sequence Classifier
 
 perl /PATH/TO/Metaxa2\_2.2/metaxa2\_dbb -o COI\_FINAL -g COI\_FINAL -t
 COI\_final.tax -i COI\_final.fasta -r 1051536662
-
-\
-\
-
-\
-\
-
-\
-\
-

@@ -2,41 +2,46 @@
 
 **Make sequences continuous by removing next line characters**
 
-awk '/\^\>/ {printf("\\n%s\\n",\$0);next; } { printf("%s",\$0);} END
-{printf("\\n");}' \< Arthropod\_COI.fasta \> Arthropod\_COI\_RMNL.fast
+```
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < Arthropod_COI.fasta > Arthropod_COI_RMNL.fasta
+```
 
 **Clean Fasta Headers**
 
-cat Arthropod\_COI\_RMNL.fast | perl -pe ‘s/\^(\>\\d+).\*/\$1/’ \>
-Arthropod\_COI\_rmNL.fast
+```
+cat Arthropod_COI_RMNL.fast | perl -pe ‘s/^(>\d+).*/$1/’ > Arthropod_COI_rmNL.fasta
+```
 
 **Use Python script to remove entries with three or more ambiguous base
 calls**
 
-python Python\_script\_1.py Arthropod\_COI\_rmNL.fasta
+```
+python Python_script_1.py Arthropod_COI_rmNL.fasta
+```
 
 \# This produces the following output file:
 Arthropod\_COI\_rmNL\_rmNNN.fasta
 
 **Get list of NCBI Gi Numbers for Sequence Entries**
 
-cat Arthropod\_COI\_rmNL\_rmNNN.fasta | perl -pe ‘s/\^\>(\\d+)/\$1/’ \>
-COI.gis
+```
+cat Arthropod_COI_rmNL_rmNNN.fasta | perl -pe ‘s/^>(\d+)/$1/’ > COI.gis
+```
 
 # Get Taxonomies
 
 **Use Perl script from Sickel et al. (2016) (requires NCBI Taxonomy
 module)**
 
-perl
-/PATH/TO/RDP\_Akenbrand/meta-barcoding-dual-indexing/code/gi2taxonomy.pl
---gis COI.gis --out COI.tax --species COI.species.taxids –genus
-COI.genus.taxids
+```
+perl /PATH/TO/RDP_Akenbrand/meta-barcoding-dual-indexing/code/gi2taxonomy.pl --gis COI.gis --out COI.tax --species COI.species.taxids –genus COI.genus.taxids
+```
 
 # Run Metaxa2 Database Builder Tool to Extract Zeale Region
 
-perl /PATH/TO/Metaxa2\_2.2/metaxa2\_dbb -o COI\_PRELIM -g COI\_PRELIM -t
-COI.tax -i Arthropod\_COI\_rmNL\_rmNNN.fasta -r 1051536662
+```
+perl /PATH/TO/Metaxa2_2.2/metaxa2_dbb -o COI_PRELIM -g COI_PRELIM -t COI.tax -i Arthropod_COI_rmNL_rmNNN.fasta -r 1051536662
+```
 
 \# To designate the exact amplicon region of interest, the metabarcoding
 primer set can be used to determine 5’ to 3’ region, enabling the user
@@ -47,9 +52,11 @@ when executing the Metaxa2 Database Builder Tool via the –r flag.
 as the reference for our work (with the exception of Embioptera and
 Strepsiptera, as discussed in the manuscript)
 
-\>1051536662
+```
+>1051536662
 
 AATTTGGGCAGGAATAATTGGCTCTTCTTTAAGAATTTTAATTCGAGCAGAATTAGGGAACCCCGGATCTTTAATTGGAGACGACCAAATTTATAATACTATTGTTACAGCTCATGCCTTTATTATAATTTTTTTTATAGTTATACCTATTATAATT
+```
 
 \# After executing this command, the sequences and taxonomies of the
 extracted entries can be found in the output directory tree. The
@@ -60,17 +67,17 @@ directory. To remove MAFFT and HMMER processing artifacts, we used a
 Perl command to remove ‘-’ characters and the ‘|E’ appended to the Gi
 numbers
 
-cat E.full-length-trimmed-realigned.afa | perl –pe ‘s/-//g’ | perl –pe
-‘s/\^\>(\\d+)\\|E/\>\$1/’ | awk '{ if (\$0 !\~ /\>/) {print
-toupper(\$0)} else {print \$0} }' \> COI\_prelim\_0.fasta
+```
+cat E.full-length-trimmed-realigned.afa | perl –pe ‘s/-//g’ | perl –pe ‘s/^>(\d+)\|E/>$1/’ | awk '{ if ($0 !~ />/) {print toupper($0)} else {print $0} }' > COI_prelim_0.fasta 
+```
 
 # Curate Taxonomies
 
 **Remove Entries Undefined at Kingdom Rank and Reformat**
 
-cat blast.taxonomy.txt | sed '/k\_\_undef\_\_/d' | perl -pe
-'s/\^(\\d+).E\\tRoot;/\$1\\t/' | perl -pe 's/\_+\\d+//g' | perl –pe
-‘s/\^\>(\\d+)\\.E/\>\$1/’ \> COI\_prelim\_0.tax
+```
+cat blast.taxonomy.txt | sed '/k__undef__/d' | perl -pe 's/^(\d+).E\tRoot;/$1\t/' | perl -pe 's/_+\d+//g' | perl –pe ‘s/^>(\d+)\.E/>$1/’ > COI_prelim_0.tax
+```
 
 **Curate Entries Undefined at Intermediate Taxonomic Ranks**
 
@@ -78,15 +85,17 @@ cat blast.taxonomy.txt | sed '/k\_\_undef\_\_/d' | perl -pe
 each entry like a semicolon separated list, allowing us to search and
 replace empty ranks (i.e. ‘;;’)
 
-cat COI\_prelim\_0.tax | perl -pe 's/.\_\_undef//g' \>
-COI\_prelim\_1.tax
+```
+cat COI_prelim_0.tax | perl -pe 's/.__undef//g' > COI_prelim_1.tax
+```
 
 \# We then searched for empty ranks, determined the appropriate label
 based on authoritative taxonomic databases or phylogenetic analyses and
 replaced the empty rank with the label as shown in the example below
 
-cat COI\_prelim\_1.tax | perl -pe
-'s/;(;f\_\_Lepismatidae)/;o\_\_Zygentoma\$1/' \> COI\_prelim\_2.tax
+```
+cat COI_prelim_1.tax | perl -pe 's/;(;f__Lepismatidae)/;o__Zygentoma$1/' > COI_prelim_2.tax
+```
 
 \# the following table shows all the necessary changes
 
@@ -117,8 +126,9 @@ cat COI\_prelim\_1.tax | perl -pe
 \# The following is an example of using Perl substitution to removes
 artifacts from taxonomic lineages
 
-cat COI\_prelim\_2.tax | perl -pe 's/s\_\_[A-Za-z]+\\ssp\\.\\s.\*//' \>
-COI\_prelim\_3.tax
+```
+cat COI_prelim_2.tax | perl -pe 's/s__[A-Za-z]+\ssp\.\s.*//' > COI_prelim_3.tax
+```
 
 \# The following non-exhaustive list shows artifacts commonly found in
 our sequence data
@@ -137,28 +147,26 @@ our sequence data
 the entry, which can be done using a Perl script from Sickel et al.
 (2016)
 
-perl
-\~/PATH/TO/RDP\_Akenbrand/meta-barcoding-dual-indexing/code/tax2rdp\_utax.pl
-COI\_prelim\_3.tax COI\_prelim\_0.fasta COI\_prelim\_4
+```
+perl ~/PATH/TO/RDP_Akenbrand/meta-barcoding-dual-indexing/code/tax2rdp_utax.pl COI_prelim_3.tax COI_prelim_0.fasta COI_prelim_4
 
-java -Xmx4g -jar
-/PATH/TO/RDP\_Akenbrand/rdp\_classifier\_2.11/dist/classifier.jar
-rm-dupseq --infile COI\_prelim\_4.rdp.fa --outfile
-COI\_prelim\_5.rmDS.fasta --duplicates --min\_seq\_length 50
+java -Xmx4g -jar /PATH/TO/RDP_Akenbrand/rdp_classifier_2.11/dist/classifier.jar rm-dupseq --infile COI_prelim_4.rdp.fa --outfile COI_prelim_5.rmDS.fasta --duplicates --min_seq_length 50
+```
 
 \# After removing duplicates, create new file of remaining taxonomies
 and a separate file for the remaining sequence entries
 
-cat COI\_prelim\_5.rmDS.fasta | perl –pe ‘s/\^\>(\\d+).\*/\>\$1/’ \>
-COI\_final.fasta
+```
+cat COI_prelim_5.rmDS.fasta | perl –pe ‘s/^>(\d+).*/>$1/’ > COI_final.fasta
 
-grep ‘\>’ COI\_prelim\_5.rmDS.fasta | perl –pe ‘s/\^\>//’ \>
-COI\_final.tax
+grep ‘>’ COI_prelim_5.rmDS.fasta | perl –pe ‘s/^>//’ > COI_final.tax
+```
 
 \# Check to ensure that the archetypical reference sequence, in this
 case Gi 1051536662, is still present in the final dataset
 
 # Train Metaxa2 DNA Sequence Classifier
 
-perl /PATH/TO/Metaxa2\_2.2/metaxa2\_dbb -o COI\_FINAL -g COI\_FINAL -t
-COI\_final.tax -i COI\_final.fasta -r 1051536662
+```
+perl /PATH/TO/Metaxa2_2.2/metaxa2_dbb -o COI_FINAL -g COI_FINAL -t COI_final.tax -i COI_final.fasta -r 1051536662
+```

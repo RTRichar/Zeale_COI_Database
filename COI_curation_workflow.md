@@ -16,7 +16,7 @@ cat Arthropod_COI_RMNL.fast | perl -pe ‘s/^(>\d+).*/$1/’ > Arthropod_COI_rmN
 calls**
 
 ```
-python Remove_NNNplust.py Arthropod_COI_rmNL.fasta
+python Remove_NNNplus.py Arthropod_COI_rmNL.fasta
 ```
 
 \# This produces the following output file:

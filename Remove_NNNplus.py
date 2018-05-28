@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+#--$ python Remove_NNNplus.py input.fasta
+
 import sys
 iname = sys.argv[1]
 

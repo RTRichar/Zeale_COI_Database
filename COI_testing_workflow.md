@@ -21,7 +21,7 @@ perl /PATH/TO/Metaxa2_2.2/metaxa2 -i Test.fasta -o TEST_REP1_R68 --cpu 28 -g TES
 ***Use python script to compare the predicted taxonomies to the actual taxonomic identities of the testing sequences***
 
 ```
-python Mtxa2PerformEval.py -dt TrainingDatabase.taxonomies.txt -tt TestingSeqs.taxonomies.txt -pt predicted.taxonomies.txt
+python Mtxa2PerformEval.py -dt TrainingDatabase.taxonomies.txt -tt TestingSeqs.taxonomies.txt -pt predicted.taxonomies.txt -op REP1_EVAL
 ```
 
 ***Use trained classifier to predict the taxonomic composition of the testing sequences while forcing family-level classification***

@@ -10,7 +10,7 @@ python GetTestTrain.py Curated_DB.fasta
 
 ***Train the Metaxa2 classifier using the output training sequence file from the previous command.***
 
-\# refer to COI_curation_workflow.md file for details on classifier training
+\# refer to _COI_curation_workflow.md_ file for details on classifier training
 
 ***Use trained classifier to predict the taxonomic composition of the testing sequences***
 

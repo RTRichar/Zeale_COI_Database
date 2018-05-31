@@ -30,7 +30,7 @@ python Mtxa2PerformEval.py -dt TrainingDatabase.taxonomies.txt -tt TestingSeqs.t
 perl /PATH/TO/Metaxa2_2.2/metaxa2 -i Test.fasta -o TEST_REP1_ForceFam --cpu 28 -g TEST_REP1_DB --taxlevel 6 
 ```
 
-***Use python script to align actual taxonomies agains predicted taxonomies in a csv file which includes a column of associated reliability scores***
+***Use python script to align actual taxonomies against predicted taxonomies in a csv file which includes a column of associated reliability scores***
 
 ```
 python CurateForLogReg.py predicted.taxonomies.txt actual.taxonomies.txt OutputName.csv
